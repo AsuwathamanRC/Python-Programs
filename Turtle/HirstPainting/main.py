@@ -7,7 +7,7 @@ tim.speed("fastest")
 t.colormode(255)
 
 # Extract colors from an image
-rgb_colors = []
+# rgb_colors = []
 # colors = colorgram.extract('Turtle\HirstPainting\image.jpg', 30)
 # for color in colors:
 #     r = color.rgb.r
