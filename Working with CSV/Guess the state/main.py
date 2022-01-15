@@ -1,4 +1,3 @@
-from os import stat
 from turtle import Turtle, Screen
 import turtle
 import pandas as p
