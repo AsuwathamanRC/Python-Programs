@@ -1,3 +1,4 @@
+from os import stat
 from turtle import Turtle, Screen
 import turtle
 import pandas as p
@@ -34,10 +35,13 @@ while game_is_on:
     answer_state = screen.textinput(title=f"Guess the state({score+1}/50)", prompt="What's another state name?").title()
     
     if answer_state.lower()=="exit":
-        learning_list = []
-        for state in stateList:
-            if state not in answer_list:
-                learning_list.append(state)
+        # learning_list = []
+        # for state in stateList:
+        #     if state not in answer_list:
+        #         learning_list.append(state)
+
+        # Using list comprehension
+        learning_list = [state for state in stateList if state not in answer_list]
         newData = p.DataFrame(learning_list)
         newData.to_csv(r"Working with CSV\Guess the state\states_to_learn.csv")
         break            
