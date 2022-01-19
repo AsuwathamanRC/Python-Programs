@@ -1,3 +1,4 @@
+import json
 from tkinter import *
 from tkinter import messagebox
 from random import randint, choice, shuffle
@@ -31,12 +32,50 @@ def savePswd():
     if len(email)==0 or len(password)==0 or len(website)==0:
         messagebox.showwarning(title="Oops",message="Please don't leave any fields empty!")
     else:
-        isOk = messagebox.askokcancel(title=website,message=f"These are the details entered.\nEmail: {email}\nPassword: {password}\nIs it ok to save?")
+        isOk = messagebox.askokcancel(title=website.title(),message=f"These are the details entered.\nEmail: {email}\nPassword: {password}\nIs it ok to save?")
+        # Save data in txt file
+        # if isOk:
+        #     with open(r"Tkinter\Password manager\data.txt", "a") as f:
+        #         f.write(f"{website} | {email} | {password}\n")
+        #         passwordEntry.delete(0,END)
+        #         websiteEntry.delete(0,END)
+
+        # Save data in json file
         if isOk:
-            with open(r"Tkinter\Password manager\data.txt", "a") as f:
-                f.write(f"{website} | {email} | {password}\n")
+            newData = {website.lower():{
+                "email": email,
+                "password": password
+            }}
+            try:
+                with open(r"Tkinter\Password manager\data.json","r") as f:
+                    data = json.load(f)
+                    data.update(newData)
+            except FileNotFoundError:
+                # Creates a new file
+                with open(r"Tkinter\Password manager\data.json", 'w') as f:
+                    json.dump(newData,f,indent=4)
+                    pass
+            else:
+                with open(r"Tkinter\Password manager\data.json","w") as f:
+                    json.dump(data,f,indent=4)
+            finally:
                 passwordEntry.delete(0,END)
                 websiteEntry.delete(0,END)
+
+# ---------------------------- SEARCH PASSWORD ------------------------------- #
+def searchPassword():
+    website = websiteEntry.get().lower()
+    try:
+        with open(r"Tkinter\Password manager\data.json","r") as f:
+            data = json.load(f)
+            email = data[website]["email"]
+            password = data[website]["password"]
+    except FileNotFoundError:
+        messagebox.showerror(title="Error",message="No data file found.")
+    except KeyError:
+        messagebox.showwarning(title="Warning",message=f"No password found for {website.title()}")
+    else:
+        messagebox.showinfo(title=website.title(),message=f"Email: {email}\nPassword: {password}")
 
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
@@ -57,8 +96,8 @@ pswd = Label(text="Password:", bg=WHITE)
 pswd.grid(row=3,column=0)
 
 # Entries
-websiteEntry = Entry(width=50)
-websiteEntry.grid(row=1,column=1,columnspan=2)
+websiteEntry = Entry(width=32)
+websiteEntry.grid(row=1,column=1)
 websiteEntry.focus()
 emailEntry = Entry(width=50)
 emailEntry.grid(row=2,column=1,columnspan=2)
@@ -67,6 +106,8 @@ passwordEntry = Entry(width=32)
 passwordEntry.grid(row=3,column=1)
 
 # Buttons
+searchBtn = Button(text="Search",command=searchPassword,width=12)
+searchBtn.grid(row=1,column=2)
 generatePswdBtn = Button(text="Generate Password",command=generatePassword)
 generatePswdBtn.grid(row=3,column=2)
 addBtn = Button(text="Add",command=savePswd,width=43)

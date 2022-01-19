@@ -1,0 +1,26 @@
+{
+    "twitter": {
+        "email": "defaultmail@test.com",
+        "password": "9jc!RojUth67_"
+    },
+    "facebook": {
+        "email": "defaultmail@test.com",
+        "password": "PUvXOFBUC]/+04@"
+    },
+    "google": {
+        "email": "defaultmail@test.com",
+        "password": "T0@1pAE<ETT@W0"
+    },
+    "github": {
+        "email": "defaultmail@test.com",
+        "password": "9mCQX&se2}FV?-"
+    },
+    "stackoverflow": {
+        "email": "defaultmail@test.com",
+        "password": "1,e#sRFw0VXWx6W"
+    },
+    "instagram": {
+        "email": "defaultmail@test.com",
+        "password": "4;j8Xr2i*Kh$bm="
+    }
+}
