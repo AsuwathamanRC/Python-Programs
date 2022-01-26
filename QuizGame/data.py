@@ -1,3 +1,10 @@
+import requests
+
+parameters = { "amount" : "10", "type" : "boolean" }
+response = requests.get("https://opentdb.com/api.php",params=parameters)
+response.raise_for_status()  # Throw error when the response code is not OK
+question_data_api = response.json()["results"]
+
 question_data = [
 {"text": "A slug's blood is green.", "answer": "True"},
 {"text": "The loudest animal is the African Elephant.", "answer": "False"},
